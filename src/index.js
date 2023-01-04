@@ -38,6 +38,26 @@ g.get("/api",(q,s)=>{
     }
     s.send(best);
 })
+g.get("/ranking",(q,s)=>{
+    s.status(200);
+    s.sendFile(__dirname+'/rank.html');
+})
+g.get("/api/rank",(q,s)=>{
+    s.status(200);
+
+    var menus = this.c;
+    menus.sort(function(val1,val2){
+        var val1 = val1.score;
+        var val2 = val2.score;
+        if( val1 < val2 ) {
+            return 1;
+            } else {
+                return -1;
+            }
+    });
+
+    s.send(menus);
+})
 g.listen(process.env.PORT,()=>{
     console.log(process.env.PORT);
 })
